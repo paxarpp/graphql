@@ -7,7 +7,9 @@ const resolvers = {
 			if (user === undefined) throw new Error("User not found.");
 			return user;
 		},
-		users: (parent, args, context, info) => {
+		users: (parent, { last }, context, info) => {
+			if (+last > 0) return users.slice(-1 * +last);
+			
 			return users;
 		}
 	},
