@@ -12,8 +12,8 @@ const resolvers = {
 		},
 		
 		posts: (parent, { creatorId }, context, info) => {
-			const _posts = posts.filter(post => +post.creatorId === +creatorId);
-			return _posts;
+			if (!creatorId) return posts;
+			return posts.filter(post => +post.creatorId === +creatorId);
 		},
 		user: (parent, { id }, context, info) => {
 			const user = users.find(user => +user.id === +id);

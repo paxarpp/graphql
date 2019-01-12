@@ -6,11 +6,10 @@ const styleContent = {
     border: '1px solid grey',
     marginBottom: '10px',
     padding: '10px',
-    width: '300px',
-    background: '#d6d6d6'
+    width: '300px'
 }
 
-class UsersList extends Component {
+class PostsList extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -18,24 +17,22 @@ class UsersList extends Component {
         }
     }
 
-    handlerSelectUser = (id) => () => {
+    handlerSelectPost = (id, creatorId) => () => {
         const query = gql`{
-            user(id: ${id}) {
+            post(id: ${id}) {
                 id
-                name
-                email
-                age
-            }
-            posts(creatorId: ${id}) {
                 title
                 content
-                id
+                date
+            }
+            user(id: ${creatorId}) {
+                name
             }
         }`;
         this.setState({query});
     }
 
-    clearUser = () => {
+    clearPost = () => {
         this.setState({query: ''});
     }
 
@@ -46,9 +43,10 @@ class UsersList extends Component {
                 <Query
                     query={
                         gql`{
-                            users {
+                            posts {
                                 id
-                                name
+                                title
+                                creatorId
                             }
                         }`}>
                 {
@@ -57,11 +55,11 @@ class UsersList extends Component {
                     if (error) return <p>Error</p>;
             
                     return (
-                        data.users &&
-                        data.users.map(({ name, id }) => (
-                            <div key={id} onClick={this.handlerSelectUser(id)} style={styleContent}>
+                        data.posts &&
+                        data.posts.map(({ title, id, creatorId }) => (
+                            <div key={`post-${id}`} onClick={this.handlerSelectPost(id, creatorId)} style={styleContent}>
                                 <p>
-                                {name}
+                                {title}
                                 </p>
                             </div>
                         ))
@@ -79,24 +77,20 @@ class UsersList extends Component {
                             if (error) return <p>Error</p>;
                     
                             return (
-                                data.user &&
-                                    <div onClick={this.clearUser} style={styleContent}>
+                                data.post &&
+                                    <div onClick={this.clearPost} style={styleContent}>
+                                        <p>
+                                            {data.post.title}
+                                        </p>
+                                        <p>
+                                            {data.post.content}
+                                        </p>
+                                        <p>
+                                            {data.post.date}
+                                        </p>
                                         <p>
                                             {data.user.name}
                                         </p>
-                                        <p>
-                                            {data.user.email}
-                                        </p>
-                                        <p>
-                                            {data.user.age}
-                                        </p>
-                                        {
-                                            data.posts.map(({id, title, content}) => {
-                                                return (
-                                                    <p key={`idpost-${id}`}>{title} <span>{content}</span></p>
-                                                )
-                                            })
-                                        }
                                     </div>
                                 ) 
                             }
@@ -108,4 +102,4 @@ class UsersList extends Component {
     }
 }
 
-export default UsersList;
+export default PostsList;
