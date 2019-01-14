@@ -3,6 +3,8 @@ import { posts } from "../mockData/db";
 import * as usersMutation from "../Mutation/usersMutation";
 import * as postsMutation from "../Mutation/postsMutation";
 
+const USER_PER_PAGE = 10;
+
 const resolvers = {
 	Query: {
 		post: (parent, { id }, context, info) => {
@@ -20,9 +22,10 @@ const resolvers = {
 			if (user === undefined) throw new Error("User not found.");
 			return user;
 		},
-		users: (parent, { last, first }, context, info) => {	
-			if (last && +last > 0 && +last < users.length) return users.slice(-1 * +last);
-			if (first && +first > 0 && +first < users.length) return users.slice(0, first);
+		users: (parent, { start, offset=USER_PER_PAGE }, context, info) => {
+			const sum = +offset + +start;
+			const end = sum > users.length ? users.length : sum;
+			if (start && +start >= 0 && +start < users.length) return users.slice(start, end);
 			return users;
 		}
 	},
