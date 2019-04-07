@@ -21,12 +21,36 @@ const typeDefs = gql`
 		date: String!
 		creatorId: Int!
 	}
+	input UserInput {
+		id: ID!
+		name: String!
+		email: String!
+		age: Int
+	}
+	input UserUpdateInput {
+		id: ID!
+		name: String
+		email: String
+		age: Int
+	}
+	input PostInput {
+		id: ID!
+		title: String!
+		content: String!
+		date: String!
+		creatorId: Int!
+	}
+	input PostUpdateInput {
+		id: ID!
+		title: String
+		content: String
+	}
 	type Mutation {
-		createUser(id: ID!, name: String!, email: String!, age: Int): User!
-		updateUser(id: ID!, name: String, email: String, age: Int): User!
+		createUser(user: UserInput!): User!
+		updateUser(user: UserUpdateInput!): User!
 		deleteUser(id: ID!): User!
-		createPost(id: ID!, title: String!, content: String!, date: String!, creatorId: Int!): Post!
-		updatePost(id: ID!, title: String, content: String, date: String, creatorId: Int): Post!
+		createPost(post: PostInput!): Post!
+		updatePost(post: PostUpdateInput!): Post!
 		deletePost(id: ID!): Post!
 	}
 `;

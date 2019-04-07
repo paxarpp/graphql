@@ -1,19 +1,16 @@
 import { users } from "../mockData/db";
 
-export const createUser = (parent, { id, name, email, age }, context, info) => {
-    const user = users.find(user => +user.id === +id);
-    if (user !== undefined) throw new Error("User exists");
-    const newUser = { id, name, email, age };
-    users.push(newUser);
-    return newUser;
+export const createUser = (parent, { user }, context, info) => {
+    const userTemp = users.find(u => +u.id === +user.id);
+    if (userTemp !== undefined) throw new Error("User exists");
+    users.push(user);
+    return user;
 };
-export const updateUser = (parent, { id, name, email, age }, context, info) => {
-    let newUser = users.find(user => +user.id === +id);
-    if (newUser === undefined) throw new Error("User not found.");
-    newUser.name = name;
-    newUser.email = email;
-    newUser.age = age;
-    return newUser;
+export const updateUser = (parent, { user }, context, info) => {
+    let prevUser = users.find(u => +u.id === +user.id);
+    if (prevUser === undefined) throw new Error("User not found.");
+    Object.assign(prevUser, user)
+    return prevUser;
 };
 export const deleteUser = (parent, { id }, context, info) => {
     const userIndex = users.findIndex(user => +user.id === +id);

@@ -1,20 +1,16 @@
 import { posts } from "../mockData/db";
 
-export const createPost = (parent, { id, title, content, date, creatorId }, context, info) => {
-    const post = posts.find(post => +post.id === +id);
-    if (post !== undefined) throw new Error("Post exists");
-    const newPost = { id, title, content, date, creatorId };
-    posts.push(newPost);
-    return newPost;
+export const createPost = (parent, { post }, context, info) => {
+    const postTemp = posts.find(p => +p.id === +post.id);
+    if (postTemp !== undefined) throw new Error("Post exists");
+    posts.push(post);
+    return post;
 };
-export const updatePost = (parent, { id, title, content, date, creatorId }, context, info) => {
-    let newPost = posts.find(post => +post.id === +id);
-    if (newPost === undefined) throw new Error("Post not found.");
-    newPost.title = title;
-    newPost.content = content;
-    newPost.date = date;
-
-    return newPost;
+export const updatePost = (parent, { post }, context, info) => {
+    let prevPost = posts.find(p => +p.id === +post.id);
+    if (prevPost === undefined) throw new Error("Post not found.");
+    Object.assign(prevPost, post);
+    return prevPost;
 };
 export const deletePost = (parent, { id }, context, info) => {
     const postIndex = posts.findIndex(post => +post.id === +id);
