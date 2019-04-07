@@ -9,31 +9,47 @@ const styleContent = {
     width: '300px'
 }
 
+const stylePosition = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+}
+
+const stylePost = {
+    ...styleContent,
+    ...stylePosition,
+}
+
 class PostsList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            selectedPostId: null,
             query: null
         }
     }
 
     handlerSelectPost = (id, creatorId) => () => {
-        const query = gql`{
-            post(id: ${id}) {
-                id
-                title
-                content
-                date
-            }
-            user(id: ${creatorId}) {
-                name
-            }
-        }`;
-        this.setState({query});
+        if (this.state.selectedPostId === id) {
+            this.clearPost();
+        } else {
+            const query = gql`{
+                post(id: ${id}) {
+                    id
+                    title
+                    content
+                    date
+                }
+                user(id: ${creatorId}) {
+                    name
+                }
+            }`;
+            this.setState({query, selectedPostId: id});
+        }
     }
 
     clearPost = () => {
-        this.setState({query: ''});
+        this.setState({query: '', selectedPostId: null});
     }
 
     render() {
@@ -73,12 +89,12 @@ class PostsList extends Component {
                     <Query query={query}>
                         {
                             ({ loading, error, data }) => {
-                            if (loading) return <p>Loading...</p>;
-                            if (error) return <p>Error</p>;
+                            if (loading) return <p style={stylePosition}>Loading...</p>;
+                            if (error) return <p style={stylePosition}>Error</p>;
                     
                             return (
                                 data.post &&
-                                    <div onClick={this.clearPost} style={styleContent}>
+                                    <div onClick={this.clearPost} style={stylePost}>
                                         <p>
                                             {data.post.title}
                                         </p>

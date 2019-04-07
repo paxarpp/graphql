@@ -9,34 +9,48 @@ const styleContent = {
     width: '300px',
     background: '#d6d6d6'
 }
+const stylePosition = {
+    position: 'absolute',
+    top: '10%',
+    left: '50%',
+}
+const styleUser = {
+    ...styleContent,
+    ...stylePosition,
+}
 
 class UsersList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            selectedUserId: null,
             query: null
         }
     }
 
     handlerSelectUser = (id) => () => {
-        const query = gql`{
-            user(id: ${id}) {
-                id
-                name
-                email
-                age
-            }
-            posts(creatorId: ${id}) {
-                title
-                content
-                id
-            }
-        }`;
-        this.setState({query});
+        if (this.state.selectedUserId === id) {
+            this.clearUser();
+        } else {
+            const query = gql`{
+                user(id: ${id}) {
+                    id
+                    name
+                    email
+                    age
+                }
+                posts(creatorId: ${id}) {
+                    title
+                    content
+                    id
+                }
+            }`;
+            this.setState({query, selectedUserId: id});
+        }
     }
 
     clearUser = () => {
-        this.setState({query: ''});
+        this.setState({query: '', selectedUserId: null});
     }
 
     render() {
@@ -75,12 +89,12 @@ class UsersList extends Component {
                     <Query query={query}>
                         {
                             ({ loading, error, data }) => {
-                            if (loading) return <p>Loading...</p>;
-                            if (error) return <p>Error</p>;
+                            if (loading) return <p style={stylePosition}>Loading...</p>;
+                            if (error) return <p style={stylePosition}>Error</p>;
                     
                             return (
                                 data.user &&
-                                    <div onClick={this.clearUser} style={styleContent}>
+                                    <div onClick={this.clearUser} style={styleUser}>
                                         <p>
                                             {data.user.name}
                                         </p>
