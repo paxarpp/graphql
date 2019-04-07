@@ -1,8 +1,7 @@
 import { users } from "../mockData/db";
 
 export const createUser = (parent, { user }, context, info) => {
-    const userTemp = users.find(u => +u.id === +user.id);
-    if (userTemp !== undefined) throw new Error("User exists");
+    user.id = Math.max(...users.map(u => u.id)) + 1;
     users.push(user);
     return user;
 };

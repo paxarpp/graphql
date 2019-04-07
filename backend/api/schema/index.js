@@ -22,7 +22,6 @@ const typeDefs = gql`
 		creatorId: Int!
 	}
 	input UserInput {
-		id: ID!
 		name: String!
 		email: String!
 		age: Int
@@ -34,7 +33,6 @@ const typeDefs = gql`
 		age: Int
 	}
 	input PostInput {
-		id: ID!
 		title: String!
 		content: String!
 		date: String!

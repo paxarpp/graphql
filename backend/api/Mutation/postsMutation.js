@@ -1,8 +1,7 @@
 import { posts } from "../mockData/db";
 
 export const createPost = (parent, { post }, context, info) => {
-    const postTemp = posts.find(p => +p.id === +post.id);
-    if (postTemp !== undefined) throw new Error("Post exists");
+    post.id = Math.max(...posts.map(p => p.id)) + 1;
     posts.push(post);
     return post;
 };

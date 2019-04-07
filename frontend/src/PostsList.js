@@ -20,6 +20,10 @@ const stylePost = {
     ...stylePosition,
 }
 
+const styleComment = {
+    margin: 0,
+}
+
 class PostsList extends Component {
     constructor(props) {
         super(props)
@@ -74,7 +78,7 @@ class PostsList extends Component {
                         data.posts &&
                         data.posts.map(({ title, id, creatorId }) => (
                             <div key={`post-${id}`} onClick={this.handlerSelectPost(id, creatorId)} style={styleContent}>
-                                <p>
+                                <p style={styleComment}>
                                 {title}
                                 </p>
                             </div>
