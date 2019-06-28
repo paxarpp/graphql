@@ -12,7 +12,6 @@ const resolvers = {
 			if (post === undefined) throw new Error("Post not found.");
 			return post;
 		},
-		
 		posts: (parent, { creatorId }, context, info) => {
 			if (!creatorId) return posts;
 			return posts.filter(post => +post.creatorId === +creatorId);

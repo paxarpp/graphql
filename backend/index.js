@@ -10,8 +10,8 @@ const PORT = 4000;
 
 const SERVER = new ApolloServer({
 	typeDefs,
-    resolvers,
-    playground: {
+	resolvers,
+	playground: {
 		settings: {
 			'editor.theme': 'light'
 		}

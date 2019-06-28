@@ -8,7 +8,7 @@ export let users = [
 
 export let posts = [
     {id: 1, title: 'первый пост', content: 'тест поста', date: '24/12/2018', creatorId: 1},
-    {id: 2, title: 'второй пост', content: 'тест  ыфва  ыва ыа ыфпоста', date: '25/12/2018', creatorId: 2},
-    {id: 3, title: 'третий пост', content: 'тест выа ыв ываы ыфва поста', date: '26/12/2018', creatorId: 1},
-    {id: 4, title: 'четвертый пост', content: 'тест постаы фва ыва  ыаф', date: '28/12/2018', creatorId: 4},
+    {id: 2, title: 'второй пост', content: 'это контент второго поста', date: '25/12/2018', creatorId: 2},
+    {id: 3, title: 'третий пост', content: '3 пост', date: '26/12/2018', creatorId: 1},
+    {id: 4, title: 'четвертый пост', content: '4 пост тут', date: '28/12/2018', creatorId: 4},
 ];
