@@ -16,7 +16,7 @@ export const Post = ({ loading, error, data, clearPost }) => {
         {data.post.date}
       </p>
       <p>
-        {data.user.name}
+        {data.post.creator.name}
       </p>
     </div>
   )

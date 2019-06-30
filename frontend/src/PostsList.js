@@ -8,33 +8,33 @@ class PostsList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedPost: null,
+      selectedPostId: null,
     }
   }
 
-  handlerSelectPost = (selectedPostData) => () => {
-    const { selectedPost } = this.state;
-    if (selectedPost && selectedPost.id === selectedPostData.id) {
+  handlerSelectPost = (id) => () => {
+    const { selectedPostId } = this.state;
+    if (selectedPostId === id) {
       this.clearPost();
     } else {
-      this.setState({ selectedPost: selectedPostData });
+      this.setState({ selectedPostId: id });
     }
   }
 
   clearPost = () => {
-    this.setState({ selectedPost: null });
+    this.setState({ selectedPostId: null });
   }
 
   render() {
-    const { selectedPost } = this.state;
+    const { selectedPostId } = this.state;
     return (
       <div>
         <Query query={GET_POSTS}>
           {(props) => <Posts {...props} handlerSelectPost={this.handlerSelectPost}/>}
         </Query>
         {
-          selectedPost &&
-          <Query query={SELECTED_POST(selectedPost)}>
+          selectedPostId &&
+          <Query query={SELECTED_POST(selectedPostId)}>
             {(props) => <Post {...props} clearPost={this.clearPost} />}
           </Query>
         }

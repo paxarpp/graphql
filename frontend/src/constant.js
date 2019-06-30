@@ -36,14 +36,14 @@ export const SELECTED_USER = (id) => gql`{
     id
   }
 }`;
-export const SELECTED_POST = ({ id, creatorId }) => gql`{
+export const SELECTED_POST = (id) => gql`{
   post(id: ${id}) {
       id
       title
       content
       date
-  }
-  user(id: ${creatorId}) {
-      name
+      creator {
+        name
+      }
   }
 }`;

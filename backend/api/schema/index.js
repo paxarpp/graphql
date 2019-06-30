@@ -20,6 +20,7 @@ const typeDefs = gql`
 		content: String!
 		date: String!
 		creatorId: Int!
+		creator: User!
 	}
 	input UserInput {
 		name: String!

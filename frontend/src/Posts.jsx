@@ -5,8 +5,8 @@ export const Posts = ({ loading, error, data, handlerSelectPost }) => {
   if (error) return <p>Error</p>;
   return (
     data.posts &&
-    data.posts.map(({ title, id, creatorId }) => (
-      <div key={`post-${id}`} onClick={handlerSelectPost({id, creatorId})} className={'style_post-content'}>
+    data.posts.map(({ title, id }) => (
+      <div key={`post-${id}`} onClick={handlerSelectPost(id)} className={'style_post-content'}>
         <p className={'style_comment'}>
           {title}
         </p>
