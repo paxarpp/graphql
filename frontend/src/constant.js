@@ -23,3 +23,27 @@ export const GET_USER = gql`{
       name
   }
 }`;
+export const SELECTED_USER = (id) => gql`{
+  user(id: ${id}) {
+    id
+    name
+    email
+    age
+  }
+  posts(creatorId: ${id}) {
+    title
+    content
+    id
+  }
+}`;
+export const SELECTED_POST = ({ id, creatorId }) => gql`{
+  post(id: ${id}) {
+      id
+      title
+      content
+      date
+  }
+  user(id: ${creatorId}) {
+      name
+  }
+}`;
