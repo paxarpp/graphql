@@ -44,8 +44,7 @@ const resolvers = {
 	},
 	User: {
 		posts: ({ id }, arg, context, info) => {
-			const posts = posts.find(post => +post.creatorId === +id);
-			return posts;
+			return posts.filter(post => +post.creatorId === +id);
 		}
 	}
 };
