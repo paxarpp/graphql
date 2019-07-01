@@ -14,6 +14,6 @@ export const updateUser = (parent, { user }, context, info) => {
 export const deleteUser = (parent, { id }, context, info) => {
     const userIndex = users.findIndex(user => +user.id === +id);
     if (userIndex === -1) throw new Error("User not found.");
-    const deletedUsers = users.splice(userIndex, 1);
-    return deletedUsers[0];
+    const [deletedUsers] = users.splice(userIndex, 1);
+    return deletedUsers;
 };

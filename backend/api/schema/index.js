@@ -6,13 +6,14 @@ const typeDefs = gql`
 		user(id: ID!): User!
 		post(id: ID!): Post!
 		posts(creatorId: ID): [Post!]!
+		creator: User
 	}
 	type User {
 		id: ID!
 		name: String!
 		email: String!
 		age: Int
-		posts: [Post]
+		posts: [Post]!
 	}
 	type Post {
 		id: ID!

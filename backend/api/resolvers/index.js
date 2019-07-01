@@ -10,12 +10,6 @@ const resolvers = {
 		post: (parent, { id }, context, info) => {
 			const post = posts.find(post => +post.id === +id);
 			if (post === undefined) throw new Error("Post not found.");
-			const user = users.find(user => +user.id === +post.creatorId);
-			post.creator = {
-				name: user.name,
-				email: user.email,
-				age: user.age,
-			};
 			return post;
 		},
 		posts: (parent, { creatorId }, context, info) => {
@@ -41,6 +35,18 @@ const resolvers = {
 		createPost: postsMutation.createPost,
 		updatePost: postsMutation.updatePost,
 		deletePost: postsMutation.deletePost
+	},
+	Post: {
+		creator: ({ creatorId }, arg, context, info) => {
+			const user = users.find(user => +user.id === +creatorId);
+			return user;
+		}
+	},
+	User: {
+		posts: ({ id }, arg, context, info) => {
+			const posts = posts.find(post => +post.creatorId === +id);
+			return posts;
+		}
 	}
 };
 
