@@ -1,23 +1,23 @@
 import React from 'react';
 
-export const User = ({ loading, error, data, clearUser }) => {
+export const User = ({ loading, error, data: { user }, clearUser }) => {
   if (loading) return <p className={'style_position'}>Loading...</p>;
   if (error) return <p className={'style_position'}>Error</p>;
 
   return (
-    data.user &&
+    user &&
     <div onClick={clearUser} className={'style_user'}>
       <p>
-        {data.user.name}
+        {user.name}
       </p>
       <p>
-        {data.user.email}
+        {user.email}
       </p>
       <p>
-        {data.user.age}
+        {user.age}
       </p>
       {
-        data.posts.map(({ id, title, content }) => {
+        user.posts.map(({ id, title, content }) => {
           return (
             <p key={`idpost-${id}`}>{title} <span>{content}</span></p>
           )

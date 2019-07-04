@@ -29,11 +29,11 @@ export const SELECTED_USER = (id) => gql`{
     name
     email
     age
-  }
-  posts(creatorId: ${id}) {
-    title
-    content
-    id
+    posts {
+      title
+      content
+      id
+    }
   }
 }`;
 export const SELECTED_POST = (id) => gql`{
